@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "504036802153",
+    "project_id": "social-connect-bb137",
+    "storage_bucket": "social-connect-bb137.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504036802153:android:1e50bd25322d962fd16cf8",
+        "android_client_info": {
+          "package_name": "com.example.social_connect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "504036802153-01muu8gf4utn6cs4noj4rbis6hu85o01.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.social_connect",
+            "certificate_hash": "ae057ccfc5c94a6b883d61d91e50bc7d45563916"
+          }
+        },
+        {
+          "client_id": "504036802153-e8hs94gqigo0bau27sc9chor180gbbut.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiR0M6pRqHD41onJK18qzsCK-JX6k7HJo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "504036802153-e8hs94gqigo0bau27sc9chor180gbbut.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
