@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Social-connect</string>
+    <string name="action_Logout">Logout</string>
 </resources>

@@ -1,12 +1,11 @@
 package com.example.social_connect
 
 
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.example.socialapp.daos.UserDao
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -18,7 +17,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.auth.User
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.coroutines.Dispatchers
@@ -54,8 +52,12 @@ class SignInActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val currentUser = auth.currentUser
-        updateUI(currentUser)
+//        val currentUser = auth.currentUser
+//        updateUI(currentUser)
+        if(GoogleSignIn.getLastSignedInAccount(this)!=null){
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 
     private fun signIn() {
@@ -111,9 +113,9 @@ class SignInActivity : AppCompatActivity() {
             startActivity(mainActivityIntent)
             finish()
         }
-//        } else {
-//            signInButton.visibility = View.VISIBLE
-//            progressBar.visibility = View.GONE
-//        }
+         else {
+            signInButton.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+    }
     }
 }
