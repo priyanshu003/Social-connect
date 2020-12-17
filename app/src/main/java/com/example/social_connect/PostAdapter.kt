@@ -1,4 +1,5 @@
 package com.example.social_connect
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +12,17 @@ import com.example.social_connect.models.Post
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class PostAdapter(options: FirestoreRecyclerOptions<Post>, val listener: IPostAdapter) : FirestoreRecyclerAdapter<Post, PostAdapter.PostViewHolder>(
     options
 ) {
+
 
     class PostViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val postText: TextView = itemView.findViewById(R.id.postTitle)
@@ -24,6 +31,7 @@ class PostAdapter(options: FirestoreRecyclerOptions<Post>, val listener: IPostAd
         val likeCount: TextView = itemView.findViewById(R.id.likeCount)
         val userImage: ImageView = itemView.findViewById(R.id.userImage)
         val likeButton: ImageView = itemView.findViewById(R.id.likeButton)
+        val uImage: ImageView = itemView.findViewById(R.id.uImage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -35,9 +43,27 @@ class PostAdapter(options: FirestoreRecyclerOptions<Post>, val listener: IPostAd
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int, model: Post) {
+        val database = Firebase.database
+        val myRef = database.getReference("upload/")
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                val value = dataSnapshot.getValue<String>().toString()
+                //  Log.d(TAG, "Value is: $value")
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                //  Log.w(TAG, "Failed to read value.", error.toException())
+            }
+        })
+
         holder.postText.text = model.text
         holder.userText.text = model.createdBy.displayName
         Glide.with(holder.userImage.context).load(model.createdBy.imageUrl).circleCrop().into(holder.userImage)
+        Glide.with(holder.uImage.context).load(model.image2).into(holder.uImage)
         holder.likeCount.text = model.likedBy.size.toString()
         holder.createdAt.text = Utils.getTimeAgo(model.createdAt)
 

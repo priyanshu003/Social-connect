@@ -51,11 +51,20 @@
             android:textColor="#212121" />
 
         <ImageView
+            android:id="@+id/uImage"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/postTitle" />
+
+        <ImageView
             android:id="@+id/likeButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:layout_constraintLeft_toLeftOf="@id/postTitle"
-            app:layout_constraintTop_toBottomOf="@id/postTitle"
+            app:layout_constraintLeft_toLeftOf="@id/uImage"
+            app:layout_constraintTop_toBottomOf="@id/uImage"
             android:layout_marginTop="16dp" />
 
         <TextView
