@@ -1,8 +1,6 @@
 package com.example.social_connect.daos
 
 
-import android.net.Uri
-import android.widget.Toast
 import com.example.social_connect.models.Post
 import com.example.social_connect.models.User
 import com.example.socialapp.daos.UserDao
@@ -14,7 +12,6 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import java.util.HashMap
 
 class PostDao {
 
@@ -33,6 +30,7 @@ class PostDao {
             postCollections.document().set(post)
         }
     }
+
     fun getPostById(postId: String): Task<DocumentSnapshot> {
         return postCollections.document(postId).get()
     }
@@ -43,7 +41,7 @@ class PostDao {
             val post = getPostById(postId).await().toObject(Post::class.java)!!
             val isLiked = post.likedBy.contains(currentUserId)
 
-            if(isLiked) {
+            if (isLiked) {
                 post.likedBy.remove(currentUserId)
             } else {
                 post.likedBy.add(currentUserId)

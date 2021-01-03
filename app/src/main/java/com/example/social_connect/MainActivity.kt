@@ -1,4 +1,4 @@
- package com.example.social_connect
+package com.example.social_connect
 
 import android.content.Intent
 import android.os.Bundle
@@ -18,10 +18,10 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 
- class MainActivity : AppCompatActivity(), IPostAdapter {
+class MainActivity : AppCompatActivity(), IPostAdapter {
 
 
-     private lateinit var auth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
     lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var postDao: PostDao
     private lateinit var adapter: PostAdapter
@@ -30,23 +30,24 @@ import kotlinx.android.synthetic.main.activity_main.*
         setContentView(R.layout.activity_main)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        mGoogleSignInClient= GoogleSignIn.getClient(this,gso)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 // pass the same server client ID used while implementing the LogIn feature earlier.
         auth = Firebase.auth
 
 
 
-        fab.setOnClickListener{
-            val intent = Intent(this,CreatPostActivity::class.java)
+        fab.setOnClickListener {
+            val intent = Intent(this, CreatPostActivity::class.java)
             startActivity(intent)
         }
 
         setUpRecyclerView()
     }
-//    private val auth by lazy {
+
+    //    private val auth by lazy {
 //        FirebaseAuth.getInstance()
 //    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -80,16 +81,17 @@ import kotlinx.android.synthetic.main.activity_main.*
     override fun onLikeClicked(postId: String) {
         postDao.updateLikes(postId)
     }
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-            R.id.action_logout->{
-                    mGoogleSignInClient.signOut().addOnCompleteListener {
-                        val intent= Intent(this, SignInActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                }
 
-                true
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_logout -> {
+            mGoogleSignInClient.signOut().addOnCompleteListener {
+                val intent = Intent(this, SignInActivity::class.java)
+                startActivity(intent)
+                finish()
             }
+
+            true
+        }
         else -> {
             // If we got here, the user's action was not recognized.
             // Invoke the superclass to handle it.

@@ -1,5 +1,5 @@
 package com.example.social_connect
-import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,19 +12,19 @@ import com.example.social_connect.models.Post
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 
-class PostAdapter(options: FirestoreRecyclerOptions<Post>, val listener: IPostAdapter) : FirestoreRecyclerAdapter<Post, PostAdapter.PostViewHolder>(
-    options
+class PostAdapter(options: FirestoreRecyclerOptions<Post>, private val listener: IPostAdapter) : FirestoreRecyclerAdapter<Post, PostAdapter.PostViewHolder>(
+        options
 ) {
 
 
-    class PostViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val postText: TextView = itemView.findViewById(R.id.postTitle)
         val userText: TextView = itemView.findViewById(R.id.userName)
         val createdAt: TextView = itemView.findViewById(R.id.createdAt)
@@ -35,8 +35,8 @@ class PostAdapter(options: FirestoreRecyclerOptions<Post>, val listener: IPostAd
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val viewHolder =  PostViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false))
-        viewHolder.likeButton.setOnClickListener{
+        val viewHolder = PostViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false))
+        viewHolder.likeButton.setOnClickListener {
             listener.onLikeClicked(snapshots.getSnapshot(viewHolder.adapterPosition).id)
         }
         return viewHolder
@@ -70,7 +70,7 @@ class PostAdapter(options: FirestoreRecyclerOptions<Post>, val listener: IPostAd
         val auth = Firebase.auth
         val currentUserId = auth.currentUser!!.uid
         val isLiked = model.likedBy.contains(currentUserId)
-        if(isLiked) {
+        if (isLiked) {
             holder.likeButton.setImageDrawable(ContextCompat.getDrawable(holder.likeButton.context, R.drawable.ic_liked))
         } else {
             holder.likeButton.setImageDrawable(ContextCompat.getDrawable(holder.likeButton.context, R.drawable.ic_unliked))

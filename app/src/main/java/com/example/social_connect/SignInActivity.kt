@@ -38,9 +38,9 @@ class SignInActivity : AppCompatActivity() {
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         auth = Firebase.auth
 
@@ -54,7 +54,7 @@ class SignInActivity : AppCompatActivity() {
         super.onStart()
 //        val currentUser = auth.currentUser
 //        updateUI(currentUser)
-        if(GoogleSignIn.getLastSignedInAccount(this)!=null){
+        if (GoogleSignIn.getLastSignedInAccount(this) != null) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
@@ -77,7 +77,7 @@ class SignInActivity : AppCompatActivity() {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account =
-                completedTask.getResult(ApiException::class.java)!!
+                    completedTask.getResult(ApiException::class.java)!!
             Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
             firebaseAuthWithGoogle(account.idToken!!)
         } catch (e: ApiException) {
@@ -101,10 +101,10 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun updateUI(firebaseUser: FirebaseUser?) {
-        if(firebaseUser != null) {
+        if (firebaseUser != null) {
 
             val user = com.example.social_connect.models.User(
-                firebaseUser.uid, firebaseUser.displayName, firebaseUser.photoUrl.toString()
+                    firebaseUser.uid, firebaseUser.displayName, firebaseUser.photoUrl.toString()
             )
             val usersDao = UserDao()
             usersDao.addUser(user)
@@ -112,10 +112,9 @@ class SignInActivity : AppCompatActivity() {
             val mainActivityIntent = Intent(this, MainActivity::class.java)
             startActivity(mainActivityIntent)
             finish()
-        }
-         else {
+        } else {
             signInButton.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
-    }
+        }
     }
 }
